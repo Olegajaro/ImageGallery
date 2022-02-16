@@ -14,9 +14,27 @@ class GalleryViewController: UIViewController {
         collectionViewLayout: UICollectionViewFlowLayout()
     )
     
+    let networkService = NetworkService()
+    
+    var photos: [Photo] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        fetchData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.bounds
+    }
+    
+    private func setupViews() {
         view.backgroundColor = .systemBackground
         navigationItem.title = "Gallery"
         collectionView.register(GalleryCell.self,
@@ -25,17 +43,24 @@ class GalleryViewController: UIViewController {
         collectionView.dataSource = self
         view.addSubview(collectionView)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.frame = view.bounds
+
+    private func fetchData() {
+        networkService.fetchCat { result in
+            switch result {
+            case .success(let photos):
+                self.photos = photos
+                print(photos.first?.title ?? "nil")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
  
 extension GalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        27
+        photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
