@@ -16,6 +16,7 @@ class GalleryCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.backgroundColor = .lightGray
+//        contentView.layer.cornerRadius = 15
     }
     
     required init?(coder: NSCoder) {

@@ -17,6 +17,7 @@ class GalleryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .systemBackground
         navigationItem.title = "Gallery"
         collectionView.register(GalleryCell.self,
                                 forCellWithReuseIdentifier: GalleryCell.identifier)
@@ -73,14 +74,6 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let width = (view.frame.width - 2) / 3
-        return CGSize(width: width, height: width)
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        CGSize(width: view.frame.width, height: 0)
+        return CGSize(width: width, height: width + 40)
     }
 }
