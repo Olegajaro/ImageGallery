@@ -13,6 +13,7 @@ class GalleryViewController: UIViewController {
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
+    private var activityIndicator: UIActivityIndicatorView?
     
     let networkService = NetworkService()
     
@@ -27,6 +28,7 @@ class GalleryViewController: UIViewController {
         
         setupViews()
         fetchData()
+        activityIndicator = showActivityIndicator(in: view)
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,10 +48,11 @@ class GalleryViewController: UIViewController {
     }
 
     private func fetchData() {
-        networkService.fetchPhotos { result in
+        networkService.fetchPhotos { [weak self] result in
             switch result {
             case .success(let photos):
-                self.photos = photos
+                self?.photos = photos
+                self?.activityIndicator?.stopAnimating()
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -81,6 +84,7 @@ extension GalleryViewController: UICollectionViewDelegate {
                         didSelectItemAt indexPath: IndexPath) {
         
         let controller = PhotoDetailController()
+        controller.configure(withPhoto: photos[indexPath.row])
         
         navigationController?.pushViewController(controller, animated: true)
     }
