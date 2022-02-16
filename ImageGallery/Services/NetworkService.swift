@@ -14,7 +14,7 @@ enum NetworkError: Error {
 }
 
 class NetworkService {
-    func fetchCat(
+    func fetchPhotos(
         completion: @escaping (Result<[Photo], NetworkError>) -> Void
     ) {
         guard

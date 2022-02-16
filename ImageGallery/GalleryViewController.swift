@@ -37,6 +37,7 @@ class GalleryViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .systemBackground
         navigationItem.title = "Gallery"
+        
         collectionView.register(GalleryCell.self,
                                 forCellWithReuseIdentifier: GalleryCell.identifier)
         collectionView.delegate = self
@@ -45,11 +46,10 @@ class GalleryViewController: UIViewController {
     }
 
     private func fetchData() {
-        networkService.fetchCat { result in
+        networkService.fetchPhotos { result in
             switch result {
             case .success(let photos):
                 self.photos = photos
-                print(photos.first?.title ?? "nil")
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -76,7 +76,15 @@ extension GalleryViewController: UICollectionViewDataSource {
     }
 }
 
-extension GalleryViewController: UICollectionViewDelegate {}
+extension GalleryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        
+        let controller = PhotoDetailController()
+        
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}
 
 extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
