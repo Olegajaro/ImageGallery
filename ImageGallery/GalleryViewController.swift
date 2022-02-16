@@ -37,7 +37,7 @@ class GalleryViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "AppBackgroundColor")
         navigationItem.title = "Gallery"
         
         collectionView.register(GalleryCell.self,

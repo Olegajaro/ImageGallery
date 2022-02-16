@@ -51,7 +51,7 @@ class GalleryCell: UICollectionViewCell {
     }
 
     private func setupViews() {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = UIColor(named: "CellColor")
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.lightGray.cgColor
         

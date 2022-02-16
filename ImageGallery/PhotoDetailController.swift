@@ -16,19 +16,45 @@ class PhotoDetailController: UIViewController {
         return imageView
     }()
     
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        return label
+    }()
+    
     var photo: Photo!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        view.backgroundColor = .secondarySystemBackground
-        
-        photoImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(photoImageView)
+        setupViews()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        layout()
+    }
+    
+    func configure(withPhoto photo: Photo) {
+        photoImageView.sd_setImage(with: photo.url)
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = UIColor(named: "AppBackgroundColor")
+        
+        photoImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(photoImageView)
+        
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        dateLabel.text = "Date of download: \(Date().dateFormatString)"
+        dateLabel.adjustsFontSizeToFitWidth = true
+        dateLabel.textAlignment = .center
+        view.addSubview(dateLabel)
+    }
+    
+    private func layout() {
         
         NSLayoutConstraint.activate([
             photoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -36,9 +62,17 @@ class PhotoDetailController: UIViewController {
             photoImageView.widthAnchor.constraint(equalToConstant: view.frame.size.width),
             photoImageView.heightAnchor.constraint(equalTo: photoImageView.widthAnchor)
         ])
-    }
-    
-    func configure(withPhoto photo: Photo) {
-        photoImageView.sd_setImage(with: photo.url)
+        
+        NSLayoutConstraint.activate([
+            dateLabel.topAnchor.constraint(
+                equalTo: photoImageView.bottomAnchor, constant: 16
+            ),
+            dateLabel.leadingAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.leadingAnchor
+            ),
+            dateLabel.trailingAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.trailingAnchor
+            )
+        ])
     }
 }
