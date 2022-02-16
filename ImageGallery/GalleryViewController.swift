@@ -70,6 +70,8 @@ extension GalleryViewController: UICollectionViewDataSource {
             for: indexPath
         ) as! GalleryCell
         
+        cell.configure(withPhoto: photos[indexPath.row])
+        
         return cell
     }
 }
@@ -82,7 +84,7 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        1
+        2
     }
     
     func collectionView(
@@ -90,7 +92,7 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        1
+        2
     }
     
     func collectionView(
@@ -98,7 +100,7 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = (view.frame.width - 2) / 3
+        let width = (view.frame.width - 4) / 3
         return CGSize(width: width, height: width + 40)
     }
 }
