@@ -21,9 +21,7 @@ class PhotoDetailController: UIViewController {
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         return label
     }()
-    
-    var photo: PhotoModelCodable!
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -36,9 +34,12 @@ class PhotoDetailController: UIViewController {
         layout()
     }
     
-    func configure(withPhoto photo: PhotoModelCodable) {
-        if let url = URL(string: photo.url) {
-            photoImageView.sd_setImage(with: url)
+    func configure(withPhoto photo: PhotoModel?) {
+        if let url = URL(string: photo?.url ?? "") {
+            photoImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(systemName: "wifi.exclamationmark")
+            )
         }
     }
     
@@ -59,10 +60,18 @@ class PhotoDetailController: UIViewController {
     private func layout() {
         
         NSLayoutConstraint.activate([
-            photoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            photoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            photoImageView.widthAnchor.constraint(equalToConstant: view.frame.size.width),
-            photoImageView.heightAnchor.constraint(equalTo: photoImageView.widthAnchor)
+            photoImageView.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            photoImageView.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
+            ),
+            photoImageView.widthAnchor.constraint(
+                equalToConstant: view.frame.size.width
+            ),
+            photoImageView.heightAnchor.constraint(
+                equalTo: photoImageView.widthAnchor
+            )
         ])
         
         NSLayoutConstraint.activate([

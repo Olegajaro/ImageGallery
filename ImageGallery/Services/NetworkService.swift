@@ -15,7 +15,7 @@ enum NetworkError: Error {
 
 class NetworkService {
     func fetchPhotos(
-        completion: @escaping (Result<[PhotoModelCodable], NetworkError>) -> Void
+        completion: @escaping (Result<[PhotoModelCodeable]?, NetworkError>) -> Void
     ) {
         guard
             let url = URL(string: "https://jsonplaceholder.typicode.com/photos")
@@ -41,7 +41,10 @@ class NetworkService {
             }
 
             do {
-                let photos = try JSONDecoder().decode([PhotoModelCodable].self, from: data)
+                let photos = try JSONDecoder().decode(
+                    [PhotoModelCodeable]?.self, from: data
+                )
+                
                 DispatchQueue.main.async {
                     completion(.success(photos))
                 }

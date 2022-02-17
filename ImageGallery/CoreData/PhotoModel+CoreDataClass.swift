@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(PhotoModel)
-public class PhotoModel: NSManagedObject {
-
-}
+public class PhotoModel: NSManagedObject {}

@@ -12,9 +12,7 @@ import SDWebImage
 class GalleryCell: UICollectionViewCell {
     
     static let identifier = "cellID"
-    
-    var photo: PhotoModelCodable!
-    
+
     private let photoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person")
@@ -25,6 +23,7 @@ class GalleryCell: UICollectionViewCell {
     private let informationLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
@@ -45,13 +44,16 @@ class GalleryCell: UICollectionViewCell {
         layout()
     }
     
-    func configure(withPhoto photo: PhotoModelCodable) {
-        if let url = URL(string: photo.thumbnailURL) {
-            photoImage.sd_setImage(with: url)
+    func configure(withPhoto photo: PhotoModel) {
+        if let url = URL(string: photo.thumbnailURL ?? "") {
+            photoImage.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(systemName: "wifi.exclamationmark")
+            )
         }
         informationLabel.text = "Image id: \(photo.id), Size: 150x150"
     }
-
+ 
     private func setupViews() {
         contentView.backgroundColor = UIColor(named: "CellColor")
         contentView.layer.borderWidth = 1
@@ -71,12 +73,12 @@ class GalleryCell: UICollectionViewCell {
             photoImage.leadingAnchor.constraint(equalTo: leadingAnchor),
             photoImage.trailingAnchor.constraint(equalTo: trailingAnchor),
             photoImage.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                               constant: -40)
+                                               constant: -20)
         ])
         
         NSLayoutConstraint.activate([
             informationLabel.topAnchor.constraint(
-                equalTo: photoImage.bottomAnchor, constant: 8
+                equalTo: photoImage.bottomAnchor
             ),
             informationLabel.leadingAnchor.constraint(
                 equalTo: leadingAnchor, constant: 8
