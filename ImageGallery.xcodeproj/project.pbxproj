@@ -89,9 +89,8 @@
 				108C146027BD745D0034DEA0 /* PhotoDetailController.swift */,
 				108C145827BD5AD00034DEA0 /* Model */,
 				108C145927BD5AD90034DEA0 /* Services */,
+				108C146627BD7F870034DEA0 /* Extensions */,
 				108C145727BD5AA80034DEA0 /* Files */,
-				108C146227BD77810034DEA0 /* UIViewController+Extensions.swift */,
-				108C146427BD7CB90034DEA0 /* Date+Extensions.swift */,
 			);
 			path = ImageGallery;
 			sourceTree = "<group>";
@@ -120,6 +119,15 @@
 				108C145A27BD5B670034DEA0 /* NetworkService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		108C146627BD7F870034DEA0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				108C146227BD77810034DEA0 /* UIViewController+Extensions.swift */,
+				108C146427BD7CB90034DEA0 /* Date+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		8A7CD6068F336C3B559DEB22 /* Frameworks */ = {

@@ -17,7 +17,7 @@ extension Date {
     
     var dateFormatString: String {
         let dateFormatter = Date.bankeyDateFormatter
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter.string(from: self)
     }
 }

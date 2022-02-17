@@ -37,7 +37,9 @@ class PhotoDetailController: UIViewController {
     }
     
     func configure(withPhoto photo: Photo) {
-        photoImageView.sd_setImage(with: photo.url)
+        if let url = URL(string: photo.url) {
+            photoImageView.sd_setImage(with: url)
+        }
     }
     
     private func setupViews() {

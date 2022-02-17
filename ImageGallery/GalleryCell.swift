@@ -46,7 +46,9 @@ class GalleryCell: UICollectionViewCell {
     }
     
     func configure(withPhoto photo: Photo) {
-        photoImage.sd_setImage(with: photo.thumbnailURL)
+        if let url = URL(string: photo.thumbnailURL) {
+            photoImage.sd_setImage(with: url)
+        }
         informationLabel.text = "Image id: \(photo.id), Size: 150x150"
     }
 
