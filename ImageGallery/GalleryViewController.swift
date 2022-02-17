@@ -17,7 +17,7 @@ class GalleryViewController: UIViewController {
     
     let networkService = NetworkService()
     
-    var photos: [Photo] = [] {
+    var photos: [PhotoModelCodable] = [] {
         didSet {
             collectionView.reloadData()
         }

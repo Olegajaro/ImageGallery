@@ -22,7 +22,7 @@ class PhotoDetailController: UIViewController {
         return label
     }()
     
-    var photo: Photo!
+    var photo: PhotoModelCodable!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,7 +36,7 @@ class PhotoDetailController: UIViewController {
         layout()
     }
     
-    func configure(withPhoto photo: Photo) {
+    func configure(withPhoto photo: PhotoModelCodable) {
         if let url = URL(string: photo.url) {
             photoImageView.sd_setImage(with: url)
         }

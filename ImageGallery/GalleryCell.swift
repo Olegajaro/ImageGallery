@@ -13,7 +13,7 @@ class GalleryCell: UICollectionViewCell {
     
     static let identifier = "cellID"
     
-    var photo: Photo!
+    var photo: PhotoModelCodable!
     
     private let photoImage: UIImageView = {
         let imageView = UIImageView()
@@ -45,7 +45,7 @@ class GalleryCell: UICollectionViewCell {
         layout()
     }
     
-    func configure(withPhoto photo: Photo) {
+    func configure(withPhoto photo: PhotoModelCodable) {
         if let url = URL(string: photo.thumbnailURL) {
             photoImage.sd_setImage(with: url)
         }
