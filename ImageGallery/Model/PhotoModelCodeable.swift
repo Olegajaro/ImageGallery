@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - PhotoElement
+// MARK: - Photo
 struct PhotoModelCodeable: Codable {
     let albumID, id: Int16
     let title: String

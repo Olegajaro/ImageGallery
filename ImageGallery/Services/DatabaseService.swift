@@ -13,11 +13,6 @@ class DatabaseService {
     static let shared = DatabaseService()
     private init() {}
 
-    //Returns the current Persistent Container for CoreData
-    class func getContext () -> NSManagedObjectContext {
-        return DatabaseService.persistentContainer.viewContext
-    }
-
     static var persistentContainer: NSPersistentContainer = {
         //The container that holds both data model entities
         let container = NSPersistentContainer(name: "ImageGallery")
@@ -30,6 +25,11 @@ class DatabaseService {
         
         return container
     }()
+    
+    //Returns the current Persistent Container for CoreData
+    class func getContext () -> NSManagedObjectContext {
+        return DatabaseService.persistentContainer.viewContext
+    }
 
     // MARK: - Core Data Saving support
     class func saveContext() {
@@ -48,16 +48,16 @@ class DatabaseService {
     // GET / Fetch / Requests
     func getAllShows() -> Array<PhotoModel> {
         let all = NSFetchRequest<PhotoModel>(entityName: "PhotoModel")
-        var allShows = [PhotoModel]()
+        var allPhotos = [PhotoModel]()
 
         do {
             let fetched = try DatabaseService.getContext().fetch(all)
-            allShows = fetched
+            allPhotos = fetched
         } catch {
             let nserror = error as NSError
             print(nserror.description)
         }
 
-        return allShows
+        return allPhotos
     }
 }

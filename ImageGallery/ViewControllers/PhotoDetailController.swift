@@ -10,6 +10,7 @@ import UIKit
 
 class PhotoDetailController: UIViewController {
     
+    // MARK: - UIElements
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -21,7 +22,8 @@ class PhotoDetailController: UIViewController {
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         return label
     }()
-        
+    
+    // MARK: -  View Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -34,6 +36,7 @@ class PhotoDetailController: UIViewController {
         layout()
     }
     
+    // MARK: - Configure
     func configure(withPhoto photo: PhotoModel?) {
         if let url = URL(string: photo?.url ?? "") {
             photoImageView.sd_setImage(
@@ -43,6 +46,7 @@ class PhotoDetailController: UIViewController {
         }
     }
     
+    // MARK: - SetupViews
     private func setupViews() {
         view.backgroundColor = UIColor(named: "AppBackgroundColor")
         
@@ -57,8 +61,8 @@ class PhotoDetailController: UIViewController {
         view.addSubview(dateLabel)
     }
     
+    // MARK: - Layout
     private func layout() {
-        
         NSLayoutConstraint.activate([
             photoImageView.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor

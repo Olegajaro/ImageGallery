@@ -10,16 +10,18 @@ import CoreData
 
 class GalleryViewController: UIViewController {
     
+    // MARK: - UIElements
     private let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
     private var activityIndicator: UIActivityIndicatorView?
     
-    let networkService = NetworkService()
-    
+    // Instance of NetworkService Class
+    let networkService = NetworkService.shared
+    // CoreData Entity
     var photos: [PhotoModel]?
-    
+    // Codeable Model for object
     var newPhotos: [PhotoModelCodeable]? {
         didSet {
             // Add the new spots to Core Data Context
@@ -32,10 +34,11 @@ class GalleryViewController: UIViewController {
         }
     }
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViews()
+        setup()
         fetchData()
     }
     
@@ -48,7 +51,8 @@ class GalleryViewController: UIViewController {
         collectionView.frame = view.bounds
     }
     
-    private func setupViews() {
+    // MARK: - Setup CollectionView
+    private func setup() {
         view.backgroundColor = UIColor(named: "AppBackgroundColor")
         navigationItem.title = "Gallery"
         
@@ -61,6 +65,7 @@ class GalleryViewController: UIViewController {
         view.addSubview(collectionView)
     }
 
+    // MARK: - Private Methods
     private func fetchData() {
         
         if DatabaseService.shared.getAllShows().count == 0 {
@@ -83,12 +88,14 @@ class GalleryViewController: UIViewController {
     private func addNewPhotosToCoreData(_ photos: [PhotoModelCodeable]) {
 
         for photo in photos {
-            let entity = NSEntityDescription.entity(
-                forEntityName: "PhotoModel",
-                in: DatabaseService.getContext()
-            )
+            guard
+                let entity = NSEntityDescription.entity(
+                    forEntityName: "PhotoModel",
+                    in: DatabaseService.getContext()
+                )
+            else { return }
             let newPhoto = NSManagedObject(
-                entity: entity!,
+                entity: entity,
                 insertInto: DatabaseService.getContext()
             )
 
@@ -105,6 +112,7 @@ class GalleryViewController: UIViewController {
     }
 }
  
+// MARK: - UICollectionViewDataSource
 extension GalleryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
@@ -134,6 +142,7 @@ extension GalleryViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension GalleryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
@@ -147,6 +156,7 @@ extension GalleryViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

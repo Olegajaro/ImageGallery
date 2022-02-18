@@ -14,6 +14,11 @@ enum NetworkError: Error {
 }
 
 class NetworkService {
+    
+    static let shared = NetworkService()
+    
+    private init() {}
+    
     func fetchPhotos(
         completion: @escaping (Result<[PhotoModelCodeable]?, NetworkError>) -> Void
     ) {
@@ -27,7 +32,6 @@ class NetworkService {
 
             guard let data = data, error == nil else {
                 completion(.failure(.serverError))
-                print("DEBUG: here1")
                 return
             }
 
@@ -36,7 +40,6 @@ class NetworkService {
                 (200...299).contains(httpResponse.statusCode)
             else {
                 completion(.failure(.responseError))
-                print("DEBUG: here2")
                 return
             }
 
@@ -50,7 +53,6 @@ class NetworkService {
                 }
             } catch {
                 completion(.failure(.decodingError))
-                print("DEBUG: here3")
             }
         }
 

@@ -13,6 +13,7 @@ class GalleryCell: UICollectionViewCell {
     
     static let identifier = "cellID"
 
+    // MARK: - UIElements
     private let photoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person")
@@ -28,6 +29,7 @@ class GalleryCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -44,6 +46,7 @@ class GalleryCell: UICollectionViewCell {
         layout()
     }
     
+    // MARK: - Configure
     func configure(withPhoto photo: PhotoModel) {
         if let url = URL(string: photo.thumbnailURL ?? "") {
             photoImage.sd_setImage(
@@ -54,6 +57,7 @@ class GalleryCell: UICollectionViewCell {
         informationLabel.text = "Image id: \(photo.id), Size: 150x150"
     }
  
+    // MARK: - SetupViews
     private func setupViews() {
         contentView.backgroundColor = UIColor(named: "CellColor")
         contentView.layer.borderWidth = 1
@@ -66,8 +70,8 @@ class GalleryCell: UICollectionViewCell {
         contentView.addSubview(informationLabel)
     }
     
+    // MARK: - Layout
     private func layout() {
-        
         NSLayoutConstraint.activate([
             photoImage.topAnchor.constraint(equalTo: topAnchor),
             photoImage.leadingAnchor.constraint(equalTo: leadingAnchor),
