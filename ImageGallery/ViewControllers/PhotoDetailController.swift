@@ -54,7 +54,6 @@ class PhotoDetailController: UIViewController {
         view.addSubview(photoImageView)
         
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         dateLabel.text = "Date of download: \(Date().dateFormatString)"
         dateLabel.adjustsFontSizeToFitWidth = true
         dateLabel.textAlignment = .center
