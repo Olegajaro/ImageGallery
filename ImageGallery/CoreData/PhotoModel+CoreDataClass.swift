@@ -10,4 +10,11 @@ import Foundation
 import CoreData
 
 @objc(PhotoModel)
-public class PhotoModel: NSManagedObject {}
+public class PhotoModel: NSManagedObject {
+    convenience init() {
+        self.init(
+            entity: DatabaseService.shared.entityForName(entityName: "PhotoModel"),
+            insertInto: DatabaseService.shared.context
+        )
+    }
+}

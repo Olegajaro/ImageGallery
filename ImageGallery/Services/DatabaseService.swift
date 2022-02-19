@@ -13,7 +13,7 @@ class DatabaseService {
     static let shared = DatabaseService()
     private init() {}
 
-    static var persistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentContainer = {
         //The container that holds both data model entities
         let container = NSPersistentContainer(name: "ImageGallery")
 
@@ -27,13 +27,17 @@ class DatabaseService {
     }()
     
     //Returns the current Persistent Container for CoreData
-    class func getContext () -> NSManagedObjectContext {
-        return DatabaseService.persistentContainer.viewContext
+    lazy var context: NSManagedObjectContext = {
+        persistentContainer.viewContext
+    }()
+
+    func entityForName(entityName: String) -> NSEntityDescription {
+        return NSEntityDescription.entity(forEntityName: entityName, in: context)!
     }
 
     // MARK: - Core Data Saving support
-    class func saveContext() {
-        let context = self.getContext()
+    func saveContext() {
+        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
@@ -47,12 +51,16 @@ class DatabaseService {
 
     // GET / Fetch / Requests
     func getAllShows() -> Array<PhotoModel> {
-        let all = NSFetchRequest<PhotoModel>(entityName: "PhotoModel")
+        let fetchRequest = NSFetchRequest<PhotoModel>(entityName: "PhotoModel")
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let context = persistentContainer.viewContext
         var allPhotos = [PhotoModel]()
 
         do {
-            let fetched = try DatabaseService.getContext().fetch(all)
-            allPhotos = fetched
+            let results = try context.fetch(fetchRequest)
+            allPhotos = results
         } catch {
             let nserror = error as NSError
             print(nserror.description)

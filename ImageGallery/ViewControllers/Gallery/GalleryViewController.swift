@@ -28,7 +28,7 @@ class GalleryViewController: UIViewController {
             guard let newPhotos = newPhotos else { return }
             addNewPhotosToCoreData(newPhotos)
             // Save them to Core Data
-            DatabaseService.saveContext()
+            DatabaseService.shared.saveContext()
             // Reload the collecionView
             collectionView.reloadData()
         }
@@ -88,26 +88,16 @@ class GalleryViewController: UIViewController {
     private func addNewPhotosToCoreData(_ photos: [PhotoModelCodeable]) {
 
         for photo in photos {
-            guard
-                let entity = NSEntityDescription.entity(
-                    forEntityName: "PhotoModel",
-                    in: DatabaseService.getContext()
-                )
-            else { return }
-            let newPhoto = NSManagedObject(
-                entity: entity,
-                insertInto: DatabaseService.getContext()
-            )
+            let newPhoto = PhotoModel()
 
             // Create a unique ID for the Photo.
             let uuid = UUID()
-            // Set the data to the entity
-            newPhoto.setValue(photo.id, forKey: "id")
-            newPhoto.setValue(photo.albumID, forKey: "albumID")
-            newPhoto.setValue(photo.title, forKey: "title")
-            newPhoto.setValue(photo.url, forKey: "url")
-            newPhoto.setValue(photo.thumbnailURL, forKey: "thumbnailURL")
-            newPhoto.setValue(uuid.uuidString, forKey: "uuid")
+            newPhoto.id = photo.id
+            newPhoto.albumID = photo.albumID
+            newPhoto.title = photo.title
+            newPhoto.url = photo.url
+            newPhoto.thumbnailURL = photo.thumbnailURL
+            newPhoto.uuid = uuid.uuidString
         }
     }
 }
